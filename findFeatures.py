@@ -10,6 +10,7 @@ from sklearn.externals import joblib
 from scipy.cluster.vq import *
 from sklearn.preprocessing import StandardScaler
 
+
 # Get the path of the training set
 parser = ap.ArgumentParser()
 parser.add_argument("-t", "--trainingSet", help="Path to Training Set", required="True")
@@ -32,16 +33,18 @@ for training_name in training_names:
     class_id+=1
 
 # Create feature extraction and keypoint detector objects
-fea_det = cv2.FeatureDetector_create("SIFT")
-des_ext = cv2.DescriptorExtractor_create("SIFT")
+fea_det = cv2.ORB_create()#FeatureDetector_create("SIFT")
+#des_ext = cv2.DescriptorExtractor_create("SIFT")
 
 # List where all the descriptors are stored
 des_list = []
-
+print 'here\n'
 for image_path in image_paths:
+    print image_path
     im = cv2.imread(image_path)
-    kpts = fea_det.detect(im)
-    kpts, des = des_ext.compute(im, kpts)
+    #kpts = fea_det.detect(im)
+    #kpts, des = des_ext.compute(im, kpts)
+    kpts, des = fea_det.detectAndCompute(im,None)
     des_list.append((image_path, des))   
     
 # Stack all the descriptors vertically in a numpy array
@@ -51,7 +54,7 @@ for image_path, descriptor in des_list[1:]:
 
 # Perform k-means clustering
 k = 100
-voc, variance = kmeans(descriptors, k, 1) 
+voc, variance = kmeans(descriptors.astype(float), k, 1) 
 
 # Calculate the histogram of features
 im_features = np.zeros((len(image_paths), k), "float32")
