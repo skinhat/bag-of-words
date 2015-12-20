@@ -1,3 +1,4 @@
+testme
 # bag-of-words
 ![alt text](docs/images/bog.png)
 Python Implementation of Bag of Words for Image Recognition using OpenCV and
