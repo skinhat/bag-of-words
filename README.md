@@ -1,4 +1,5 @@
-testmei
+This is a fork of bikz05 but works on OpenCV 3.0.0 using ORB instead of SURF and SIFT.
+
 # bag-of-words
 ![alt text](docs/images/bog.png)
 Python Implementation of Bag of Words for Image Recognition using OpenCV and
